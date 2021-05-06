@@ -108,7 +108,10 @@ def draw(canvas):
         right_score += 1
         ball_init(True)
         
-    if int(ball_pos[0]) >= WIDTH + 1 - BALL_RADIUS - PAD_WIDTH and int(ball_pos[1]) in range(paddle2_pos[1] - HALF_PAD_HEIGHT,paddle2_pos[1] + HALF_PAD_HEIGHT,1):
+    hit_right_wall = int(ball_pos[0]) >= WIDTH + 1 - BALL_RADIUS - PAD_WIDTH
+    hit_paddle = paddle2_pos[1] - HALF_PAD_HEIGHT < ball_pos[1] < paddle2_pos[1] + HALF_PAD_HEIGHT
+    
+    if  hit_right_wall and hit_paddle:
         ball_rapidity[0] = -ball_rapidity[0]
         ball_rapidity[0] *= 1.1
         ball_rapidity[1] *= 1.1
