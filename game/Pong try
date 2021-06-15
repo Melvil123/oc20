@@ -14,7 +14,7 @@ YELLOW = (255, 215, 0)
 BLUE = (65, 105, 225)
 PURPLE = (102, 102, 255)
 
-#données temps 0
+#data time 0
 WIDTH = 800
 HEIGHT = 600       
 BALL_RADIUS = 20
@@ -100,32 +100,36 @@ def draw(canvas):
         ball_rapidity[1] = -ball_rapidity[1]
     
     #ball collison check on gutters or paddles
-    if int(ball_pos[0]) <= BALL_RADIUS + PAD_WIDTH and int(ball_pos[1]) in range(paddle1_pos[1] - HALF_PAD_HEIGHT,paddle1_pos[1] + HALF_PAD_HEIGHT,1):
+        
+    hit_left_wall = int(ball_pos[0]) <= BALL_RADIUS + PAD_WIDTH
+    hit_paddle_a = paddle1_pos[1] - HALF_PAD_HEIGHT < ball_pos[1] < paddle1_pos[1] + HALF_PAD_HEIGHT
+    
+    if  hit_left_wall and hit_paddle_a:
         ball_rapidity[0] = -ball_rapidity[0]
-        ball_rapidity[0] *= 1.1
-        ball_rapidity[1] *= 1.1
+        ball_rapidity[0] *= 1.2
+        ball_rapidity[1] *= 1.2
     elif int(ball_pos[0]) <= BALL_RADIUS + PAD_WIDTH:
         right_score += 1
         ball_init(True)
         
     hit_right_wall = int(ball_pos[0]) >= WIDTH + 1 - BALL_RADIUS - PAD_WIDTH
-    hit_paddle = paddle2_pos[1] - HALF_PAD_HEIGHT < ball_pos[1] < paddle2_pos[1] + HALF_PAD_HEIGHT
+    hit_paddle_b = paddle2_pos[1] - HALF_PAD_HEIGHT < ball_pos[1] < paddle2_pos[1] + HALF_PAD_HEIGHT
     
-    if  hit_right_wall and hit_paddle:
+    if  hit_right_wall and hit_paddle_b:
         ball_rapidity[0] = -ball_rapidity[0]
-        ball_rapidity[0] *= 1.1
-        ball_rapidity[1] *= 1.1
+        ball_rapidity[0] *= 1.2
+        ball_rapidity[1] *= 1.2
     elif int(ball_pos[0]) >= WIDTH + 1 - BALL_RADIUS - PAD_WIDTH:
         left_score += 1
         ball_init(False)
 
     #update scores
-    myfont1 = pygame.font.SysFont("MS", 20)
-    label1 = myfont1.render("Score "+str(left_score), 1, (255,255,0))
+    myfont1 = pygame.font.SysFont("MS", 50)
+    label1 = myfont1.render("Score "+str(left_score), 1, (RED))
     canvas.blit(label1, (50,20))
 
-    myfont2 = pygame.font.SysFont("MS", 20)
-    label2 = myfont2.render("Score "+str(right_score), 1, (255,255,0))
+    myfont2 = pygame.font.SysFont("MS", 50)
+    label2 = myfont2.render("Score "+str(right_score), 1, (BLUE))
     canvas.blit(label2, (470, 20))  
     
     
